@@ -27,7 +27,8 @@ namespace EFCoreConcurrentIssue
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MyDbContext>(op => {
-                op.UseSqlite("Data Source=Test.db");
+                //op.UseSqlite("Data Source=Test.db");
+                op.UseOracle("User Id=system;Password=oracle;Server=localhost:49162;Direct=True;Sid=xe;Port=49162;Persist Security Info=True;");
                 // op.UseInMemoryDatabase("MemDb");
             });
             services
@@ -51,10 +52,10 @@ namespace EFCoreConcurrentIssue
             }
             if (!db.Events.Any())
             {
-                var ls = A.ListOf<Event>(10000);
+                var ls = A.ListOf<Event>(100);
                 ls.ForEach(x => {
                     x.Id = 0;
-                    x.LocationId = new Random().Next(0, 10000);
+                    x.LocationId = new Random().Next(1, 9999);
                 });
                 db.AddRange(ls);
                 db.SaveChanges();

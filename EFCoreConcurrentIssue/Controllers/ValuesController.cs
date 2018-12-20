@@ -21,12 +21,20 @@ namespace EFCoreConcurrentIssue.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var ids = new List<long>();
-            for (int i = 0; i < 10; i++)
-            {
-                ids.Add(new Random().Next(0, 10000));
-            }
+            Console.Write(".");
+            var ids = db.Events.Select(x => x.Id).Take(10).ToList();
             return Ok(db.Events.Include(x => x.Location).Where(x => ids.Contains(x.Id)).ToList());
         }
+
+        [HttpGet("Test2")]
+        public IActionResult GetTest2() =>
+            Ok(db.Locations.Include(x => x.Events)
+                .Select(x =>
+                    new 
+                    {
+                        Id = x.Id,
+                        EventCounts = x.Events.Count()
+                    })
+                .ToList());
     }
 }

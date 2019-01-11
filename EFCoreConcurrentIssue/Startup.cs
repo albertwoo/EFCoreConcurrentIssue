@@ -29,8 +29,8 @@ namespace EFCoreConcurrentIssue
             services.AddDbContext<MyDbContext>(op => {
                 // op.UseSqlite("Data Source=Test.db");
                 // op.UseInMemoryDatabase("MemDb");
-                // op.UseSqlServer("Server=localhost;Database=DemoDb;User Id=sa;Password=test@123456;");
-                op.UseOracle("User Id=system;Password=oracle;Server=localhost:49161;Direct=True;Sid=xe;Port=49162;Persist Security Info=True;");
+                op.UseSqlServer("Server=localhost;Database=DemoDb;User Id=sa;Password=test@123456;");
+                //op.UseOracle("User Id=system;Password=oracle;Server=localhost:49161;Direct=True;Sid=xe;Port=49162;Persist Security Info=True;");
             });
             services
                 .AddMvc()
